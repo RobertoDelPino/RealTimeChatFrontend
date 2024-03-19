@@ -168,7 +168,7 @@ const ChatProvider = ({children}) => {
         if(receiver != auth._id) return
 
         socket.emit("Update Messages Status", {...chat.messages[0], receiver, chatId: chat._id})
-        return await axiosClient.post(`/messages/updateStatus`, {chatId: chat._id, userId: chat.messages[0].sender} , config)
+        return await axiosClient.post(`/chat/update-status`, {chatId: chat._id, userId: chat.messages[0].sender} , config)
     }
 
     const removeChatWithNewMessages = (chatId) => {
