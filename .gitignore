@@ -1,0 +1,14 @@
+# Ignorar Dockerfile
+Dockerfile
+
+# Ignorar directorio node_modules
+node_modules/
+
+# Ignorar archivo nginx.conf
+nginx.conf
+
+# Ignorar directorio .vscode
+.vscode/
+
+# Ignorar directorio dist
+dist/
