@@ -94,7 +94,7 @@ const ChatProvider = ({children}) => {
             signal: sendMessageController.signal
         }
 
-        await axiosClient.post(`/messages/send`, message, config)
+        await axiosClient.post(`/chat/send-message`, message, config)
 
         socket.emit("Send Message", message)
     }
