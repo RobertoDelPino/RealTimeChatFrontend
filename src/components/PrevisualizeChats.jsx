@@ -20,7 +20,7 @@ const PrevisualizeChats = () => {
     const { 
         auth, 
         getProfilePhoto, 
-        changePhoto 
+        changePhoto,
     } = useAuth();
 
     const sortedChats = getSortedChats();
@@ -53,7 +53,7 @@ const PrevisualizeChats = () => {
                                                     key={index}>
                                                         <div className="w-[90%] flex items-center">
                                                             <div className="w-10 h-10 min-w-[40px] flex items-center">
-                                                                <UserPhoto getProfilePhoto={getProfilePhoto}/>
+                                                                <UserPhoto getProfilePhoto={getProfilePhoto} user={user}/>
                                                             </div>
                                                             <div className="w-[85%] overflow-hidden">
                                                                 <p className="w-full mx-3 font-bold text-lg whitespace-nowrap overflow-hidden">{user.name} </p>

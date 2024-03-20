@@ -2,18 +2,18 @@
 import { useEffect, useRef, useState } from 'react';
 import ChangeProfileModal from './Modals/ChangeProfileModal';
 
-const PersonalUserPhoto = ({ getProfilePhoto, changePhoto }) => {
+const PersonalUserPhoto = ({ getProfilePhoto, changePhoto, user }) => {
   const [avatar, setAvatar] = useState("defaultAvatar.webp");
   const fileInput = useRef();
 
   useEffect(() => {
     const fetchPhoto = async () => {
-      const photo = await getProfilePhoto();
+      const photo = await getProfilePhoto(user._id);
       setAvatar(photo);
     };
 
     fetchPhoto();
-  }, [getProfilePhoto]);
+  }, [getProfilePhoto, user]);
 
   const changePhotoHandler = async (e) => {
     await changePhoto(e.target.files[0])

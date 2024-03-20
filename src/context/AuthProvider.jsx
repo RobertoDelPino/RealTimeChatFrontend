@@ -45,7 +45,7 @@ const AuthProvider = ({children}) => {
         navigate("/");
     }
 
-    const getProfilePhoto = async () => {
+    const getProfilePhoto = async (userId) => {
         const token = localStorage.getItem("token");
         const config = {
             headers: {
@@ -56,7 +56,7 @@ const AuthProvider = ({children}) => {
         }
 
         try {
-            const response = await axiosClient('users/profile-photo', config)
+            const response = await axiosClient('users/profile-photo/' + userId, config)
             const imageUrl = URL.createObjectURL(response.data);
             return imageUrl;
         } catch (error) {

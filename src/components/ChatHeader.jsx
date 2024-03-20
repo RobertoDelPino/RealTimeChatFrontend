@@ -7,12 +7,12 @@ const ChatHeader = (props) => {
 
     useEffect(() => {
         const fetchPhoto = async () => {
-          const photo = await getProfilePhoto();
+          const photo = await getProfilePhoto(user._id);
           setAvatar(photo);
         };
     
         fetchPhoto();
-    }, [getProfilePhoto]);
+    }, [getProfilePhoto, user]);
 
     
     return (
