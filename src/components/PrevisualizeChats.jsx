@@ -51,11 +51,11 @@ const PrevisualizeChats = () => {
                                                     className={"w-11/12 my-1 mx-auto p-2 rounded-md flex hover:cursor-pointer hover:bg-highlight " + (selectedChat._id == chat._id ? "bg-highlight" : "")} 
                                                     onClick={() => handleSelectChat(chat)}
                                                     key={index}>
-                                                        <div className="w-[90%] flex items-center">
+                                                        <div className="w-[85%] flex items-center">
                                                             <div className="w-10 h-10 min-w-[40px] flex items-center">
                                                                 <UserPhoto getProfilePhoto={getProfilePhoto} user={user}/>
                                                             </div>
-                                                            <div className="w-[85%] overflow-hidden">
+                                                            <div className="w-[90%] overflow-hidden">
                                                                 <p className="w-full mx-3 font-bold text-lg whitespace-nowrap overflow-hidden">{user.name} </p>
                                                                 <div className="w-full mx-3">
                                                                     <section className="flex justify-between">
@@ -76,7 +76,7 @@ const PrevisualizeChats = () => {
                                                             </div>
                                                         </div>
 
-                                                        <div className="w-[10%] text-center">
+                                                        <div className="w-[15%] text-center">
                                                             <p>
                                                                 {new Date(chat.messages[0].createdAt).toLocaleTimeString("es-ES", {hour: '2-digit', minute:'2-digit'})}
                                                             </p>
