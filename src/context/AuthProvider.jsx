@@ -84,6 +84,30 @@ const AuthProvider = ({children}) => {
         }
     }
 
+    const updateProfile = async (data) => {
+        try {
+            const token = localStorage.getItem("token");
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
+                },
+            }
+
+            const result = await axiosClient.post('/users/profile', data, config);
+            setAuth({
+                ...auth,
+                name: data.name,
+                avatar: data.avatar
+            });
+            return result;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+
     return (
 
         <AuthContext.Provider
@@ -93,7 +117,8 @@ const AuthProvider = ({children}) => {
                 isLoading,
                 logout,
                 getProfilePhoto,
-                changePhoto
+                changePhoto,
+                updateProfile
             }}
         >
             {children}

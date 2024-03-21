@@ -9,6 +9,7 @@ import { AuthProvider } from "@context/AuthProvider"
 import ProtectedRoute from "@layouts/ProtectedRoute"
 import ChatPage from "@pages/ChatPage"
 import { ChatProvider } from "@context/ChatProvider"
+import { Toaster } from "react-hot-toast"
 
 
 
@@ -32,7 +33,7 @@ function App() {
                 <Route index element={<ChatPage />}/>
               </Route>
             </Routes>
-        
+            <Toaster />
           </ChatProvider>
         </AuthProvider>
       </BrowserRouter>

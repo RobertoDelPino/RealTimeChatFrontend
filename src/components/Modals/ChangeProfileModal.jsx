@@ -1,13 +1,16 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import useAuth from "@hooks/useAuth";
+import { notify } from "@helpers/notify";
 
 const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
+    const { updateProfile } = useAuth();
     const [newAvatar, setAvatar] = useState(avatar);
     const [name, setName] = useState(user.name);
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const fileInputRef = useRef(null);
-
     const handleButtonClick = () => {
         fileInputRef.current.click();
     };
@@ -21,6 +24,45 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
         };
         reader.readAsDataURL(file);
     }
+
+    const handleSaveButton = async () => {
+        if(name === user.name && password === "" && newAvatar === avatar){
+            setIsOpen(false);
+            return;
+        }
+
+        if(name === ""){
+            notify("El nombre no puede estar vacío", "error");
+            return;
+        }
+
+        if(password !== "" && password !== confirmPassword){
+            notify("Las contraseñas no coinciden", "error");
+            return;
+        }
+
+        const data = {
+            id: user._id,
+            name: name,
+            password: password,
+            avatar: newAvatar
+        };
+
+        const result = await updateProfile(data);
+        if(result.status === 200){
+            setIsOpen(false);
+            notify("Perfil actualizado correctamente", "success");
+        };
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setAvatar(avatar);
+            setName(user.name);
+            setPassword("");
+            setConfirmPassword("");
+        }, 350);
+    }, [user, avatar, isOpen]);
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>
@@ -51,7 +93,7 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
                     leaveTo="transform scale-95"
                 >
                     <div className="flex items-center justify-center h-screen">
-                        <div className="rounded-lg bg-highlight text-white h-96 w-96 md:h-[450px] md:w-[450px] p-4 shadow-lg z-50 relative">
+                        <div className="rounded-lg bg-highlight text-white h-[500px] w-96 md:w-[450px] p-4 shadow-lg z-50 relative">
                             <button
                                 type="button"
                                 className="absolute top-0 right-0 m-2 text-white hover:text-slate-200"
@@ -87,7 +129,43 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
                                 />
                             </div>
 
-                            <button className="text-center w-full p-2 bg-background hover:bg-focus rounded-md">
+                            <div>
+                                <label htmlFor="name" className="block">Nombre</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="w-full p-2 mb-4 rounded-md text-black"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="password" className="block">Contraseña</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full p-2 mb-4 rounded-md text-black"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="confirmPassword" className="block">Confirmar contraseña</label>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="w-full p-2 mb-4 rounded-md text-black"
+                                />
+                            </div>
+
+                            <button 
+                                className="text-center w-full p-2 bg-background hover:bg-focus rounded-md"
+                                onClick={handleSaveButton}
+                            >
                                 Guardar
                             </button>
                         </div>
