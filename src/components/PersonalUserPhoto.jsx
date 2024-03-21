@@ -35,7 +35,12 @@ const PersonalUserPhoto = ({ getProfilePhoto, changePhoto, user }) => {
       </div>
       <input type='file' ref={fileInput} onChange={changePhotoHandler} style={{ display: 'none' }} />
 
-      <ChangeProfileModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ChangeProfileModal 
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen} 
+        user={user} 
+        avatar={avatar} 
+      />
     </div>
   );
 };
