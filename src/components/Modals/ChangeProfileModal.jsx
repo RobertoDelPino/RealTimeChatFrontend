@@ -6,6 +6,7 @@ import { notify } from "@helpers/notify";
 const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
     const { updateProfile } = useAuth();
     const [newAvatar, setAvatar] = useState(avatar);
+    const [avatarFile, setAvatarFile] = useState(null);
     const [name, setName] = useState(user.name);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,6 +22,7 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
         reader.onload = () => {
             const imageUrl = reader.result;
             setAvatar(imageUrl);
+            setAvatarFile(file);
         };
         reader.readAsDataURL(file);
     }
@@ -45,7 +47,7 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
             id: user._id,
             name: name,
             password: password,
-            avatar: newAvatar
+            avatar: avatarFile
         };
 
         const result = await updateProfile(data);
@@ -99,11 +101,11 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
                                 className="absolute top-0 right-0 m-2 text-white hover:text-slate-200"
                                 onClick={() => setIsOpen(false)}
                             >
-                                X
+                                <img src="close-icon.svg" className="w-6 transition-all ease-in-out duration-300 hover:w-7" alt="" />
                             </button>
                             <h2 className="text-xl font-semibold mb-5">Actualizar Perfil</h2>
 
-                            <div className="flex mb-5">
+                            <div className="flex mb-5 items-center">
                                 <div className="w-[90%]">
                                     <p className="">Foto de perfil</p>
                                     <p className="text-sm mb-4">Recomendado: 300 x 300</p>
@@ -125,7 +127,7 @@ const ChangeProfileModal = ({ isOpen, setIsOpen, user, avatar }) => {
                                 <img
                                     src={newAvatar}
                                     alt="Foto de perfil"
-                                    className="w-24 h-24 rounded-full object-cover bg-slate-600"
+                                    className="h-20 w-20 rounded-full object-cover bg-slate-600"
                                 />
                             </div>
 
