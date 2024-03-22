@@ -12,3 +12,6 @@ nginx.conf
 
 # Ignorar directorio dist
 dist/
+
+.env
+Dockerfile.prod
