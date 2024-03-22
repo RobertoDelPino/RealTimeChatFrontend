@@ -1,13 +1,13 @@
 import useAuth from "@hooks/useAuth"
 import useChat from "@hooks/useChat"
-import Logout from "@components/Logout";
-import PersonalUserPhoto from "@components/PersonalUserPhoto";
-import StartChat from "@components/StartChat";
-import UserPhoto from "@components/UserPhoto";
+import Logout from "@pages/Chat/components/ChatList/Logout";
+import PersonalUserPhoto from "@pages/Chat/components/ChatList/PersonalUserPhoto";
+import StartChat from "@pages/Chat/components/ChatList/StartChat";
+import UserPhoto from "@pages/Chat/components/ChatList/UserPhoto";
 import DoubleCheckGray from "@assets/double_check_gray.svg"
 import DoubleCheckBlue from "@assets/double_check_blue.svg"
 
-const PrevisualizeChats = () => {
+const ChatList = () => {
     const { 
         getSortedChats, 
         isLoading, 
@@ -106,4 +106,4 @@ const PrevisualizeChats = () => {
         )
 }
 
-export default PrevisualizeChats
+export default ChatList

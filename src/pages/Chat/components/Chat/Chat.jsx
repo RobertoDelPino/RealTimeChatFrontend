@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import useChat from "@hooks/useChat"
 import useAuth from "@hooks/useAuth"
-import MessageInput from "@components/MessageInput";
+import MessageInput from "@pages/Chat/components/Chat/MessageInput";
 import io from "socket.io-client"
-import ChatHeader from "@components/ChatHeader";
+import ChatHeader from "@pages/Chat/components/Chat/ChatHeader";
 
 let socket;
 
