@@ -2,7 +2,7 @@ import useAuth from "@hooks/useAuth"
 import useChat from "@hooks/useChat"
 import Logout from "@pages/Chat/components/ChatList/Logout";
 import PersonalUserPhoto from "@pages/Chat/components/ChatList/PersonalUserPhoto";
-import StartChat from "@pages/Chat/components/ChatList/StartChat";
+import StartChatComponent from "@pages/Chat/components/ChatList/StartChatComponent";
 import UserPhoto from "@pages/Chat/components/ChatList/UserPhoto";
 import DoubleCheckGray from "@assets/double_check_gray.svg"
 import DoubleCheckBlue from "@assets/double_check_blue.svg"
@@ -36,7 +36,7 @@ const ChatList = () => {
 
     return  (
             <article className="w-full h-full flex flex-col border-black border-r ">
-                <StartChat/>
+                <StartChatComponent/>
                 <div>
                     {
                         Object.keys(sortedChats).length == 0 || sortedChats.length == 0
