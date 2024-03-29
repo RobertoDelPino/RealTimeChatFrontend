@@ -2,20 +2,24 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { notify } from "@helpers/notify";
 import useAuth from "@hooks/useAuth";
+import useChat from "@hooks/useChat";
 
-const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
+const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
     const { searchUserByEmail, getProfilePhoto } = useAuth();
+    const { createGroupChat } = useChat();
     const [ users, setUsers ] = useState([]);
     const [ email, setEmail ] = useState("");
+    const [ name, setName ] = useState("");
 
     useEffect(() => {
         setTimeout(() => {
             setEmail("");
             setUsers([]);
+            setName("");
         }, 310);
     }, [isOpen]);
 
-    const handleSubmit = async (e) => {
+    const handleSearchUserToAdd = async (e) => {
         e.preventDefault();
         if(email === ""){
             notify("El email no puede estar vacío", "error");
@@ -23,12 +27,42 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
         }
         
         const user = await searchUserByEmail(email);
+        if(!user){
+            notify("No se encontró el usuario", "error");
+            return;
+        }
+        if(users.find(u => u.id === user.id)){
+            notify("No se puede agregar a un usuario ya existente en el grupo", "error");
+            return;
+        }
         const userAvatar = await getProfilePhoto(user.id);
         user.avatar = userAvatar;
         setUsers([...users, user]);
         setEmail("");
     }
 
+    const handleCreateGroupChat = async () => {
+
+        if(users.length <= 2){
+            notify("Para crear un grupo debe de haber 3 personas como mínimo", "error");
+            return;
+        }
+
+        if(name === ""){
+            notify("El nombre del grupo no puede estar vacío", "error");
+            return;
+        }
+
+        const result = await createGroupChat(
+            {
+                chatName: name,
+                users: users.map(user => user.id)
+            }
+        );
+        console.log(result)
+
+        setIsOpen(false);
+    }
 
 
     return (
@@ -68,11 +102,20 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
                             >
                                 <img src="close-icon.svg" className="w-6 transition-all ease-in-out duration-300 hover:w-7" alt="" />
                             </button>
-                            <h2 className="text-xl font-semibold mb-5">Iniciar una conversación</h2>
+                            <h2 className="text-xl font-semibold mb-5">Crear un grupo</h2>
 
+                            <div>
+                                <label htmlFor="name" className="block mb-2">Nombre del grupo</label>
+                                <input 
+                                    type="text"
+                                    id="name" 
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="w-full p-2 mb-4 rounded-md text-black" />
+                            </div>
 
-                            <form onSubmit={handleSubmit} >
-                                <label htmlFor="email" className="block">Email</label>
+                            <form onSubmit={handleSearchUserToAdd} >
+                                <label htmlFor="email" className="block mb-2">Email</label>
                                 <input
                                     type="text"
                                     id="email"
@@ -87,10 +130,11 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
                                 > Agregar </button>
                             </form>
 
-                            <h2 className="text-lg">Usuarios del grupo</h2>
+                            <h2 className="text-lg mt-3 font-bold">Usuarios del grupo</h2>
 
                             <section className="flex flex-col gap-2 mt-2">
-                                {users.map((user) => (
+                                { users.length === 0 && <p>No hay usuarios en el grupo</p> }
+                                { users.length !== 0 && users.map((user) => (
                                     <article key={user.id} className="flex items-center justify-between bg-focus p-4 rounded-md">
                                         <p>{user.email}</p>
                                         <p>{user.name}</p>
@@ -107,8 +151,9 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
 
                             <button
                                 type="button"
+                                onClick={handleCreateGroupChat}
                                 className="w-full p-2 mt-4 rounded-md bg-focus text-white hover:bg-slate-200 transition-all ease-in-out duration-300"
-                            > Crear chat </button>
+                            >Crear</button>
 
                         </div>
                     </div>
@@ -118,4 +163,4 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
     );
 }
 
-export default ChangeProfileModal;
+export default CreateGroupChatModal;

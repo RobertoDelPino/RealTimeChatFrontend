@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import CreateChatModal from './Modals/CreateChatModal';
+import CreateGroupChatModal from './Modals/CreateGroupChatModal';
 
 const StartChatComponent = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,10 +12,10 @@ const StartChatComponent = ({ user }) => {
   return (
     <div className='my-3 flex justify-center'>
       <div className='flex items-center'>
-        <button onClick={handleDivClick}>Iniciar nueva conversación</button>
+        <button onClick={handleDivClick}>Crear Grupo</button>
       </div>
 
-      <CreateChatModal 
+      <CreateGroupChatModal 
         isOpen={isOpen} 
         setIsOpen={setIsOpen} 
         user={user} 
