@@ -188,8 +188,8 @@ const ChatProvider = ({children}) => {
 
     const getSortedChats = () => {
         return chats.sort(function(first, second) {
-            const firstDate = new Date(first.messages[0].createdAt);
-            const secondDate = new Date(second.messages[0].createdAt);
+            const firstDate = new Date(first.messages[0]?.createdAt || first.createdAt);
+            const secondDate = new Date(second.messages[0]?.createdAt || second.createdAt);
             if(firstDate > secondDate) return -1;
             if(firstDate < secondDate) return 1;
             return 0;
