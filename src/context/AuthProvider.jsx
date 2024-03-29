@@ -107,6 +107,24 @@ const AuthProvider = ({children}) => {
         }
     }
 
+    const searchUserByEmail = async (email) => {
+        try {
+            const token = localStorage.getItem("token");
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            }
+
+            const { data } = await axiosClient.get('/users/search/' + email, config);
+            return data;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
 
     return (
 
@@ -118,7 +136,8 @@ const AuthProvider = ({children}) => {
                 logout,
                 getProfilePhoto,
                 changePhoto,
-                updateProfile
+                updateProfile,
+                searchUserByEmail
             }}
         >
             {children}
