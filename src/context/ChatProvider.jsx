@@ -195,6 +195,18 @@ const ChatProvider = ({children}) => {
             return 0;
         });
     }
+
+    const createGroupChat = async (data) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        };
+
+        const result = await axiosClient.post(`/chats`, data, config)
+        return result;
+    }
     
 
     return (
@@ -222,7 +234,8 @@ const ChatProvider = ({children}) => {
                 setLatestMessage,
                 restartAll,
                 setToken,
-                getSortedChats
+                getSortedChats,
+                createGroupChat
             }}
         >
             {children}
