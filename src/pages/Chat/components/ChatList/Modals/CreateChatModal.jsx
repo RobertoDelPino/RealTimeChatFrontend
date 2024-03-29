@@ -1,10 +1,35 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { notify } from "@helpers/notify";
+import useAuth from "@hooks/useAuth";
 
 const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
-    const [ users, setUsers ] = useState([{email: "aaaa", id: "1"}]);
+    const { searchUserByEmail, getProfilePhoto } = useAuth();
+    const [ users, setUsers ] = useState([]);
     const [ email, setEmail ] = useState("");
+
+    useEffect(() => {
+        setTimeout(() => {
+            setEmail("");
+            setUsers([]);
+        }, 310);
+    }, [isOpen]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if(email === ""){
+            notify("El email no puede estar vacío", "error");
+            return;
+        }
+        
+        const user = await searchUserByEmail(email);
+        const userAvatar = await getProfilePhoto(user.id);
+        user.avatar = userAvatar;
+        setUsers([...users, user]);
+        setEmail("");
+    }
+
+
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>
@@ -45,17 +70,22 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
                             </button>
                             <h2 className="text-xl font-semibold mb-5">Iniciar una conversación</h2>
 
-                            <div>
+
+                            <form onSubmit={handleSubmit} >
                                 <label htmlFor="email" className="block">Email</label>
                                 <input
                                     type="text"
                                     id="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full p-2 mb-4 rounded-md text-black"
+                                    className="w-9/12 mr-5 p-2 mb-4 rounded-md text-black"
                                     placeholder="Busca un usuario por email"
                                 />
-                            </div>
+                                <button
+                                    type="submit"
+                                    className="w-2/12 p-2 rounded-md bg-focus text-white hover:bg-slate-200 transition-all ease-in-out duration-300"
+                                > Agregar </button>
+                            </form>
 
                             <h2 className="text-lg">Usuarios del grupo</h2>
 
@@ -64,7 +94,7 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
                                     <article key={user.id} className="flex items-center justify-between bg-focus p-4 rounded-md">
                                         <p>{user.email}</p>
                                         <p>{user.name}</p>
-                                        <p>{user.avatar}</p>
+                                        <p> <img src={user.avatar} alt="" /> </p>
                                         <button
                                             type="button"
                                             onClick={() => notify("No se puede agregar a un usuario ya existente en el grupo", "error")}
@@ -74,6 +104,11 @@ const ChangeProfileModal = ({ isOpen, setIsOpen}) => {
                                     </article>
                                 ))}
                             </section>
+
+                            <button
+                                type="button"
+                                className="w-full p-2 mt-4 rounded-md bg-focus text-white hover:bg-slate-200 transition-all ease-in-out duration-300"
+                            > Crear chat </button>
 
                         </div>
                     </div>
