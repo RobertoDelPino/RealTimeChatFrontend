@@ -7,7 +7,9 @@ const ChatHeader = () => {
     const { selectedChat} = useChat();
     const { auth, getProfilePhoto } = useAuth();
     const [avatar, setAvatar] = useState("defaultAvatar.webp");
-    const chatName = selectedChat.users.length > 2 ? selectedChat.groupName : selectedChat.users.find(user => user._id !== selectedChat._id).name;
+    const chatName = selectedChat.users.length > 2 
+        ? selectedChat.groupName 
+        : selectedChat.users.find(user => user._id !== auth._id).name;
 
     useEffect(() => {
         const fetchPhoto = async () => {
@@ -32,7 +34,7 @@ const ChatHeader = () => {
                             if(user._id !== auth._id) return user.name;
                             return "Tú"
                         }).join(", ") 
-                        : selectedChat.users.find(user => user._id !== selectedChat._id).email
+                        : selectedChat.users.find(user => user._id !== auth._id).email
                     }
                 </p>
             </div>
