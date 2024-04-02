@@ -21,9 +21,6 @@ const ChatHeader = () => {
         fetchPhoto();
     }, [getProfilePhoto, selectedChat]);
 
-    console.log(auth)
-
-    
     return (
         <div className="flex items-center p-4">
             <img src={avatar} alt="Profile" className="w-10 h-10 object-cover rounded-full mr-4" />
