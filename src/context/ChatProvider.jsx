@@ -110,7 +110,9 @@ const ChatProvider = ({children}) => {
                 return {
                     _id: message.chatId,
                     users: message.users,
-                    messages
+                    messages,
+                    isGroup: message.isGroup,
+                    groupName: message.groupName
                 };
             }
             return prevChatOnPage;
@@ -128,7 +130,13 @@ const ChatProvider = ({children}) => {
     
         setChats(prevChats => {
             const othersChat = prevChats.filter(chat => chat._id !== message.chatId);
-            return [{ _id: message.chatId, users: message.users, messages: [message] }, ...othersChat];
+            return [{ 
+                _id: message.chatId, 
+                users: message.users, 
+                messages: [message], 
+                isGroup: message.isGroup, 
+                groupName: message.groupName
+            }, ...othersChat];
         });
     }
 
@@ -167,7 +175,19 @@ const ChatProvider = ({children}) => {
         const receiver = chat.users.find(user => user._id != chat.messages[0].sender)._id
         if(receiver != auth._id) return
 
-        socket.emit("Update Messages Status", {...chat.messages[0], receiver, chatId: chat._id})
+        socket.emit("Update Messages Status", 
+            {
+                ...chat.messages[0], 
+                sender: chat.messages[0].sender, 
+                receivers: chat.users, 
+                chatId: chat._id, 
+                chatName: chat.groupName, 
+                isGroup: chat.isGroup
+            }
+        )
+        
+        
+        
         return await axiosClient.post(`/chat/update-status`, {chatId: chat._id, userId: chat.messages[0].sender} , config)
     }
 

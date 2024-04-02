@@ -22,7 +22,9 @@ const MessageInput = () => {
             chatId: chatOnPage._id,
             sender: auth._id,
             users: chatOnPage.users,
-            receiver: chatOnPage.users.find(user => user._id != auth._id)._id
+            receivers: chatOnPage.users.filter(user => user._id != auth._id).map(user => user._id),
+            isGroup: chatOnPage.isGroup,
+            groupName: chatOnPage.groupName
         }
 
         await sendMessage(messageInfo)
