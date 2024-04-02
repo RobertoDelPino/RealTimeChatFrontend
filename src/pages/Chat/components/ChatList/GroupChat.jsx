@@ -50,7 +50,7 @@ const GroupChat = ({ chat, index, handleSelectedChat }) => {
                         </p>
                         {
                             (chatsWithNewMessages.includes(chat._id) || 
-                                (!chat.messages[0].readed && chat.messages[0].sender != auth._id)) && (
+                                (!chat.messages[0].readed && chat.messages[0].sender != auth._id && !chat.isGroup)) && (
                                 <div className="flex justify-center">
                                     <div className="w-5 h-5 rounded-full bg-red-500"></div>
                                 </div>
