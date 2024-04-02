@@ -120,6 +120,19 @@ const Chat = () => {
                                 </article>
                         }
 
+                        const user = selectedChat.users.find(user => user._id == message.sender);
+                        if(chatOnPage.isGroup)
+                            return <article key={index} className="pl-4 mb-1 mt-1 max-w-[60%]">
+                                    <article>
+                                        <img src={user.avatar} alt="" />
+                                    </article>
+                                    <article className="bg-focus inline-block rounded-e-md rounded-tl-md p-2 min-w-[100px]">
+                                        <p className="text-xs font-bold text-left text-white">{user.name}</p>
+                                        <p className="mr-10">{message.message}</p>
+                                        <p className="text-xs font-bold text-right">{timestamp.getHours()}:{timestamp.getMinutes()}</p>
+                                    </article>
+                                </article>
+
                         return <article key={index} className="pl-4 mb-1 mt-1 max-w-[60%]">
                                     <article className="bg-focus inline-block rounded-e-md rounded-tl-md p-2 min-w-[100px]">
                                         <p className="mr-10">{message.message}</p>
