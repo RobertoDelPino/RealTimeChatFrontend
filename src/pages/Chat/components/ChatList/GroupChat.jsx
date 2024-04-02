@@ -2,8 +2,6 @@ import React from 'react'
 import useAuth from '@hooks/useAuth';
 import useChat from '@hooks/useChat';
 import UserPhoto from './UserPhoto';
-import DoubleCheckGray from "@assets/double_check_gray.svg"
-import DoubleCheckBlue from "@assets/double_check_blue.svg"
 
 const GroupChat = ({ chat, index, handleSelectedChat }) => {
     const { 
@@ -30,16 +28,10 @@ const GroupChat = ({ chat, index, handleSelectedChat }) => {
                         chat.messages.length !== 0 
                             ? <div className="w-full mx-3">
                                 <section className="flex justify-between">
-                                    {
-                                        chat.messages[0].sender == auth._id
-                                            ? <p className="w-8 whitespace-nowrap">
-                                                {chat.messages[0].readed
-                                                    ? <img src={DoubleCheckBlue} alt="" /> 
-                                                    : <img src={DoubleCheckGray} alt="" /> }
-                                            </p>
-                                            : ""
-                                    }
                                     <p className="w-full inline-block whitespace-nowrap overflow-hidden">
+                                        {chat.messages[0].sender == auth._id 
+                                            ? "Tú: " 
+                                            : chat.users.find(user => user._id == chat.messages[0].sender).name + ": "}
                                         {chat.messages[0].message }
                                     </p>
                                 </section>
