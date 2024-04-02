@@ -1,6 +1,7 @@
 import useChat from "@hooks/useChat"
 import useAuth from "@hooks/useAuth"
 import { useState } from "react";
+import { notify } from "@helpers/notify";
 
 const MessageInput = () => {
 
@@ -12,7 +13,7 @@ const MessageInput = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(message == ""){
-            alert("Debe escribir un mensaje para poder enviarlo")
+            notify("Debe escribir un mensaje para poder enviarlo", "error")
             return // Hay que mostrar alerta o algo para indicar que es necesario escribir algo
         }
 
