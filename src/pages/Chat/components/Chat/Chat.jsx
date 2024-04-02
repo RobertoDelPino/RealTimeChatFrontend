@@ -10,7 +10,7 @@ let socket;
 const Chat = () => {
     const { selectedChat, setSelectedChat, getChatMessages, chatOnPage, setChatOnPage, isGettingChatMessages, chats, setChats, 
             updateChatsState, updateMessagesStatus, latestMessage, setLatestMessage } = useChat();
-    const { auth, getProfilePhoto } = useAuth();
+    const { auth } = useAuth();
     const chatContainerRef = useRef(null);
 
     useEffect(() => {
@@ -85,7 +85,7 @@ const Chat = () => {
     return (
         <div className="h-full max-h-full">
             <section className="h-[70px] z-10 relative top-0 flex justify-between items-center w-full bg-focus">
-                <ChatHeader user={selectedChat.users.find(user => user._id !== auth._id)} getProfilePhoto={getProfilePhoto}/>
+                <ChatHeader/>
                 <article className="px-4">
                     <button 
                         className="w-14 h-10 p-2 rounded-md right-0 hover:scale-110 transition"
