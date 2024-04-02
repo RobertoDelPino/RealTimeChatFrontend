@@ -101,18 +101,11 @@ const ChatProvider = ({children}) => {
 
     const updateChatsState = (message) => {
         message.createdAt = new Date()
-        const messageData = {
-            message: message.message,
-            sender: message.sender,
-            createdAt: message.createdAt,
-            readed: message.readed,
-            _id: message.chatId,
-        }
         
         setChatOnPage(prevChatOnPage => {
             if (Object.keys(prevChatOnPage).length !== 0 && prevChatOnPage._id === message.chatId) {
                 const oldMessages = prevChatOnPage.messages.filter((msg) => msg !== message);
-                const messages = [...oldMessages, messageData];
+                const messages = [...oldMessages, message];
                 
                 return {
                     _id: message.chatId,
@@ -140,7 +133,7 @@ const ChatProvider = ({children}) => {
             return [{ 
                 _id: message.chatId, 
                 users: message.users, 
-                messages: [messageData], 
+                messages: [message], 
                 isGroup: message.isGroup, 
                 groupName: message.groupName
             }, ...othersChat];
@@ -192,12 +185,15 @@ const ChatProvider = ({children}) => {
                 isGroup: chat.isGroup
             }
         )
+        
+        
+        
         return await axiosClient.post(`/chat/update-status`, {chatId: chat._id, userId: chat.messages[0].sender} , config)
     }
 
     const removeChatWithNewMessages = (chatId) => {
         const newChats = chatsWithNewMessages.filter(chat => chat !== chatId)
-        setChatsWithNewMessages(newChats)
+        setChatsWithNewMessages([...newChats])
     }
 
     const restartAll = () => {

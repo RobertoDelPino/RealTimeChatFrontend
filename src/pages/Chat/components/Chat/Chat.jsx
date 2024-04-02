@@ -34,13 +34,7 @@ const Chat = () => {
         if(chatOnPage == null || latestMessage == null) return
         if(chatOnPage._id == latestMessage.chatId && latestMessage.sender != auth._id){
             const chat = chats.find(chat => chat._id == latestMessage.chatId)
-            chat.messages[0] = {
-                _id: latestMessage._id,
-                message: latestMessage.message,
-                sender: latestMessage.sender,
-                readed: latestMessage.readed,
-                createdAt: latestMessage.createdAt
-            }
+            chat.messages[0] = latestMessage
             updateMessagesStatus(chat)
         }
     }, [chatOnPage, latestMessage])
@@ -57,8 +51,7 @@ const Chat = () => {
         socket.on("Message Chat Status Updated", (message) => {
             const chatChanged = chats.find(chat => chat._id == message.chatId)
             if(chatChanged){
-                chatChanged.messages[0].message = message.message
-                chatChanged.messages[0].readed = message.readed
+                chatChanged.messages[0] = message
                 const newChats = chats.map(chat => chat._id == message.chatId ? chatChanged : chat)
                 setChats(newChats)
             }
