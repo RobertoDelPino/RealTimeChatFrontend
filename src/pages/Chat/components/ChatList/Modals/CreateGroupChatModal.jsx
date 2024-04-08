@@ -5,9 +5,9 @@ import useAuth from "@hooks/useAuth";
 import useChat from "@hooks/useChat";
 
 const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
-    const { searchUserByEmail, getProfilePhoto } = useAuth();
+    const { searchUserByEmail, getProfilePhoto, auth } = useAuth();
     const { createGroupChat } = useChat();
-    const [ users, setUsers ] = useState([]);
+    const [ users, setUsers ] = useState([{id: auth.id, name: auth.name, email: auth.email, avatar: auth.avatar}]);
     const [ email, setEmail ] = useState("");
     const [ name, setName ] = useState("");
 
@@ -93,8 +93,8 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
                     leaveFrom="transform scale-100"
                     leaveTo="transform scale-95"
                 >
-                    <div className="flex items-center justify-center h-screen">
-                        <div className="rounded-lg bg-highlight text-white h-[800px] w-96 md:w-[500px] p-4 shadow-lg z-50 relative">
+                    <div className="flex justify-center lg:items-center lg:h-screen">
+                        <div className="rounded-lg bg-highlight text-white h-[800px] w-96 md:w-[500px] p-4 shadow-lg z-50 absolute my-3">
                             <button
                                 type="button"
                                 className="absolute top-0 right-0 m-2 text-white hover:text-slate-200"
@@ -132,21 +132,27 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
 
                             <h2 className="text-lg mt-3 font-bold">Usuarios del grupo</h2>
 
-                            <section className="flex flex-col gap-2 mt-2">
+                            <section className="flex flex-col gap-2 mt-2 h-[400px] lg:h-[440px] overflow-y-scroll">
                                 { users.length === 0 && <p>No hay usuarios en el grupo</p> }
-                                { users.length !== 0 && users.map((user) => (
-                                    <article key={user.id} className="flex items-center justify-between bg-focus p-4 rounded-md">
-                                        <p>{user.email}</p>
-                                        <p>{user.name}</p>
-                                        <p> <img src={user.avatar} alt="" /> </p>
-                                        <button
-                                            type="button"
-                                            onClick={() => notify("No se puede agregar a un usuario ya existente en el grupo", "error")}
-                                        >
-                                            <div className="h-5 w-5 hover:text-xl">X</div>
-                                        </button>
-                                    </article>
-                                ))}
+                                { users.length !== 0 && users.map((user) => {
+                                    if(user.id === auth.id) return;
+                                    return ( <article id={user.id} key={user.id} className="flex items-center justify-between bg-focus p-4 rounded-md">
+                                                <div className="w-11/12 flex justify-start items-center">
+                                                    <img className="w-16 h-16 mr-8 rounded-full object-cover" src={user.avatar} alt="" />
+                                                    <div className="w-8/12 inline-block">
+                                                        <p>{user.name}</p>
+                                                        <p>{user.email}</p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    className="w-1/12"
+                                                    type="button"
+                                                    onClick={handleRemoveUserFromGroup}
+                                                >
+                                                    <img src="close-icon.svg" className="w-6 transition-all ease-in-out duration-300 hover:w-7" alt="" />
+                                                </button>
+                                            </article>
+                                )})}
                             </section>
 
                             <button
