@@ -216,7 +216,7 @@ const ChatProvider = ({children}) => {
         });
     }
 
-    const createGroupChat = async (data) => {
+    const createChat = async (data) => {
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -255,7 +255,7 @@ const ChatProvider = ({children}) => {
                 restartAll,
                 setToken,
                 getSortedChats,
-                createGroupChat
+                createChat
             }}
         >
             {children}

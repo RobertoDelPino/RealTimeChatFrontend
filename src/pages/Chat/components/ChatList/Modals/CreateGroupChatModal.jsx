@@ -6,7 +6,7 @@ import useChat from "@hooks/useChat";
 
 const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
     const { searchUserByEmail, getProfilePhoto, auth } = useAuth();
-    const { createGroupChat } = useChat();
+    const { createChat } = useChat();
     const [ users, setUsers ] = useState([{id: auth.id, name: auth.name, email: auth.email, avatar: auth.avatar}]);
     const [ email, setEmail ] = useState("");
     const [ name, setName ] = useState("");
@@ -59,7 +59,7 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
             return;
         }
 
-        const result = await createGroupChat(
+        const result = await createChat(
             {
                 chatName: name,
                 users: users.map(user => user.id)
