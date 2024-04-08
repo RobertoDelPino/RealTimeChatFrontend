@@ -18,7 +18,6 @@ const CreateSingleChatModal = ({ isOpen, setIsOpen}) => {
     }, [isOpen]);
 
     const handleSearchUserToAdd = async (e) => {
-        console.log(users)
         e.preventDefault();
         if(email === ""){
             notify("El email no puede estar vacío", "error");
@@ -43,7 +42,6 @@ const CreateSingleChatModal = ({ isOpen, setIsOpen}) => {
         }
         const userAvatar = await getProfilePhoto(user.id);
         user.avatar = userAvatar;
-        console.log([...users, user])
         setUsers([...users, user]);
         setEmail("");
     }
