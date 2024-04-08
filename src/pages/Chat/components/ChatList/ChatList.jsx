@@ -34,9 +34,9 @@ const ChatList = () => {
         return <div className="h-full flex justify-center items-center">Cargando...</div> 
 
     return  (
-            <article className="w-full h-full flex flex-col border-black border-r ">
+            <article className="w-full h-full flex flex-col border-black border-r">
                 <StartChatComponent/>
-                <div>
+                <div className="overflow-y-scroll">
                     {
                         Object.keys(sortedChats).length == 0 || sortedChats.length == 0
                         ? <div className="text-center" >Comience una nueva conversacion</div> 
@@ -49,7 +49,7 @@ const ChatList = () => {
                         )
                     }
                 </div>
-                <section className="h-20 mt-auto p-1 border-t border-black bg-focus flex justify-between">
+                <section className="h-20 min-h-20 mt-auto p-1 border-t border-black bg-focus flex justify-between">
                     <PersonalUserPhoto user={auth} getProfilePhoto={getProfilePhoto} changePhoto={changePhoto}/>
                     <Logout/>
                 </section>
