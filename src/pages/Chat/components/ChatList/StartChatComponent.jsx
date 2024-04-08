@@ -28,7 +28,6 @@ const StartChatComponent = ({ user }) => {
         user={user} 
       />
 
-      {/* Modal para crear un single chat */}
       <CreateSingleChatModal
        isOpen={isCreateSingleChatModalOpen}
        setIsOpen={setIsCreateSingleChatModalOpen} 
