@@ -1,24 +1,38 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 import CreateGroupChatModal from './Modals/CreateGroupChatModal';
+import CreateSingleChatModal from './Modals/CreateSingleChatModal';
 
 const StartChatComponent = ({ user }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [isCreateSingleChatModalOpen, setIsCreateSingleChatModalOpen] = useState(false);
 
-  const handleDivClick = () => {
-    setIsOpen(true);
+  const handleCreateGroup = () => {
+    setIsCreateGroupModalOpen(true);
+  };
+
+  const handleStartSingleChat = () => {
+    setIsCreateSingleChatModalOpen(true);
   };
 
   return (
-    <div className='my-3 flex justify-center'>
+    <div className='mt-3 flex justify-center'>
       <div className='flex items-center'>
-        <button onClick={handleDivClick}>Crear Grupo</button>
+        <button className='mr-10 border border-white p-2 hover:bg-highlight' onClick={handleStartSingleChat}>Empezar chat</button>
+        <button className='mr-10 border border-white p-2 hover:bg-highlight' onClick={handleCreateGroup}>Crear Grupo</button>
       </div>
 
       <CreateGroupChatModal 
-        isOpen={isOpen} 
-        setIsOpen={setIsOpen} 
+        isOpen={isCreateGroupModalOpen} 
+        setIsOpen={setIsCreateGroupModalOpen} 
         user={user} 
+      />
+
+      {/* Modal para crear un single chat */}
+      <CreateSingleChatModal
+       isOpen={isCreateSingleChatModalOpen}
+       setIsOpen={setIsCreateSingleChatModalOpen} 
+       user={user} 
       />
     </div>
   );
