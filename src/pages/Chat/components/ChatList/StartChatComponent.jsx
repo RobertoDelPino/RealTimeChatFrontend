@@ -19,7 +19,7 @@ const StartChatComponent = ({ user }) => {
     <div className='mt-3 flex justify-center'>
       <div className='flex items-center'>
         <button className='mr-10 border border-white p-2 hover:bg-highlight' onClick={handleStartSingleChat}>Empezar chat</button>
-        <button className='mr-10 border border-white p-2 hover:bg-highlight' onClick={handleCreateGroup}>Crear Grupo</button>
+        <button className='border border-white p-2 hover:bg-highlight' onClick={handleCreateGroup}>Crear Grupo</button>
       </div>
 
       <CreateGroupChatModal 
