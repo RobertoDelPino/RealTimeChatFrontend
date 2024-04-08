@@ -224,8 +224,7 @@ const ChatProvider = ({children}) => {
             }
         };
 
-        const result = await axiosClient.post(`/chats`, data, config)
-        return result;
+        return await axiosClient.post(`/chats`, data, config)
     }
     
 
