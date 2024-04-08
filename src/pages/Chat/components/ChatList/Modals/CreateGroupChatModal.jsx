@@ -25,6 +25,12 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
             notify("El email no puede estar vacío", "error");
             return;
         }
+
+        if(email === auth.email){
+            notify("No puedes agregarte a ti mismo", "error");
+            setEmail("");
+            return;
+        }
         
         const user = await searchUserByEmail(email);
         if(!user){
@@ -62,6 +68,12 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
         console.log(result)
 
         setIsOpen(false);
+    }
+
+    const handleRemoveUserFromGroup = (e) => {
+        const userId = e.target.parentElement.parentElement.id;
+        const newUsers = users.filter(user => user.id !== userId);
+        setUsers(newUsers);
     }
 
 
