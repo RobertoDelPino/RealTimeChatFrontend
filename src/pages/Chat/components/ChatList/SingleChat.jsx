@@ -32,33 +32,43 @@ const SingleChat = ({chat, handleSelectedChat}) => {
                                 <div className="w-full mx-3">
                                     <section className="flex justify-between">
                                         {
-                                            chat.messages[0].sender == auth._id
-                                                ? <p className="w-8 whitespace-nowrap">
-                                                    {chat.messages[0].readed
-                                                        ? <img src={DoubleCheckBlue} alt="" /> 
-                                                        : <img src={DoubleCheckGray} alt="" /> }
-                                                </p>
-                                                : ""
+                                            chat.messages.length !== 0 
+                                                ?   chat.messages[0].sender == auth._id
+                                                        ? <p className="w-8 whitespace-nowrap">
+                                                            {chat.messages[0].readed
+                                                                ? <img src={DoubleCheckBlue} alt="" /> 
+                                                                : <img src={DoubleCheckGray} alt="" /> }
+                                                        </p>
+                                                        : ""
+                                                : <p className="mx-3">Comienza enviando un mensaje</p>
                                         }
-                                        <p className="w-full inline-block whitespace-nowrap overflow-hidden">
-                                            {chat.messages[0].message }
-                                        </p>
+                                        {
+                                            chat.messages.length !== 0
+                                            ? <p className="w-full inline-block whitespace-nowrap overflow-hidden">
+                                                    {chat.messages[0].message }
+                                            </p>
+                                            : ""
+                                        }
                                     </section>
                                 </div>
                             </div>
                         </div>
 
                         <div className="w-[15%] text-center">
-                            <p>
-                                {new Date(chat.messages[0].createdAt).toLocaleTimeString("es-ES", {hour: '2-digit', minute:'2-digit'})}
-                            </p>
                             {
+                                chat.messages.length !== 0
+                                    ? <p>
+                                        {new Date(chat.messages[0].createdAt).toLocaleTimeString("es-ES", {hour: '2-digit', minute:'2-digit'})}
+                                    </p>
+                                    : ""
+                            }
+                            {
+                                chat.messages.length !== 0 &&
                                 (chatsWithNewMessages.includes(chat._id) || 
                                     (!chat.messages[0].readed && chat.messages[0].sender != auth._id)) && (
                                     <div className="flex justify-center">
                                         <div className="w-5 h-5 rounded-full bg-red-500"></div>
                                     </div>
-
                                 )
                             }
                         </div>
