@@ -42,6 +42,16 @@ const CreateSingleChatModal = ({ isOpen, setIsOpen}) => {
         }
         const userAvatar = await getProfilePhoto(user.id);
         user.avatar = userAvatar;
+
+        if(users.length > 0){
+            const userIndex = users.findIndex(u => u.id !== auth.id);
+            if(userIndex !== -1){
+                users.splice(userIndex, 1);
+            }
+        }
+
+        // setSelectedChat
+        // setChats
         setUsers([...users, user]);
         setEmail("");
     }
