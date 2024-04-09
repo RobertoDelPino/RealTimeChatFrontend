@@ -36,7 +36,7 @@ const ChatList = () => {
     return  (
             <article className="w-full h-full flex flex-col border-black border-r">
                 <StartChatComponent/>
-                <div className="overflow-y-scroll">
+                <div className="overflow-y-scroll mt-2">
                     {
                         Object.keys(sortedChats).length == 0 || sortedChats.length == 0
                         ? <div className="text-center" >Comience una nueva conversacion</div> 
