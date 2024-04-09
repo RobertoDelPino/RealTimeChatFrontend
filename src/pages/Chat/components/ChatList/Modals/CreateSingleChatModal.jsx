@@ -53,12 +53,17 @@ const CreateSingleChatModal = ({ isOpen, setIsOpen}) => {
             return;
         }
 
-        await createChat(
+        const result = await createChat(
             {
                 chatName: "",
                 users: finalUsers.map(user => user.id)
             }
         );
+
+        if(result?.error){
+            notify(result.error, "error");
+            return;
+        }
 
         setIsOpen(false);
     }
