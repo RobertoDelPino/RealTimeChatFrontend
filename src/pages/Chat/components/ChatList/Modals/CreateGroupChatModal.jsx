@@ -6,7 +6,7 @@ import useChat from "@hooks/useChat";
 
 const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
     const { searchUserByEmail, getProfilePhoto, auth } = useAuth();
-    const { createChat } = useChat();
+    const { createChat, setSelectedChat, setChats, chats } = useChat();
     const [ users, setUsers ] = useState([]);
     const [ email, setEmail ] = useState("");
     const [ name, setName ] = useState("");
@@ -59,13 +59,25 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
             return;
         }
 
-        await createChat(
+        const chatCreated = await createChat(
             {
                 chatName: name,
                 users: finalUsers.map(user => user.id)
             }
         );
 
+        setChats(prevChats => {
+            const othersChat = prevChats.filter(chat => chat._id !== chatCreated._id);
+            return [{ 
+                _id: chatCreated._id, 
+                users: chatCreated.users, 
+                messages: [], 
+                isGroup: chatCreated.isGroup, 
+                groupName: chatCreated.groupName
+            }, ...othersChat];
+        
+        })
+        setSelectedChat(chatCreated);
         setIsOpen(false);
     }
 
