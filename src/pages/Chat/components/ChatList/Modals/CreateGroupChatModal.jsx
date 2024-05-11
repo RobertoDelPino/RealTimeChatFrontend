@@ -116,8 +116,8 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
                     leaveFrom="transform scale-100"
                     leaveTo="transform scale-95"
                 >
-                    <div className="flex justify-center lg:items-center lg:h-screen">
-                        <div className="rounded-lg bg-highlight text-white h-[800px] w-96 md:w-[500px] p-4 shadow-lg z-50 absolute my-3">
+                    <div className="flex justify-center items-center h-screen">
+                        <div className="rounded-lg bg-highlight text-white h-[600px] w-82 md:w-[500px] p-4 shadow-lg z-50 absolute my-3">
                             <button
                                 type="button"
                                 className="absolute top-0 right-0 m-2 text-white hover:text-slate-200"
@@ -144,35 +144,35 @@ const CreateGroupChatModal = ({ isOpen, setIsOpen}) => {
                                     id="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-9/12 mr-5 p-2 mb-4 rounded-md text-black"
-                                    placeholder="Busca un usuario por email"
+                                    className="w-7/12 mr-5 p-2 mb-4 rounded-md text-black"
+                                    placeholder="Busca un usuario"
                                 />
                                 <button
                                     type="submit"
-                                    className="w-2/12 p-2 rounded-md bg-focus text-white hover:bg-slate-200 transition-all ease-in-out duration-300"
+                                    className="w-4/12 p-2 rounded-md bg-focus text-white hover:bg-slate-200 transition-all ease-in-out duration-300"
                                 > Agregar </button>
                             </form>
 
                             <h2 className="text-lg mt-3 font-bold">Usuarios del grupo</h2>
 
-                            <section className="flex flex-col gap-2 mt-2 h-[400px] lg:h-[440px] overflow-y-scroll">
+                            <section className="flex flex-col gap-2 mt-2 h-[240px] overflow-y-scroll">
                                 { users.length === 0 && <p>No hay usuarios en el grupo</p> }
                                 { users.length !== 0 && users.map((user) => {
                                     if(user.id === auth.id) return;
                                     return ( <article id={user.id} key={user.id} className="flex items-center justify-between bg-focus p-4 rounded-md">
                                                 <div className="w-11/12 flex justify-start items-center">
-                                                    <img className="w-16 h-16 mr-8 rounded-full object-cover" src={user.avatar} alt="" />
-                                                    <div className="w-8/12 inline-block">
+                                                    <img className="w-12 h-12 mr-2 md:mr-8 rounded-full object-cover" src={user.avatar} alt="" />
+                                                    <div className="w-7/12 inline-block">
                                                         <p>{user.name}</p>
                                                         <p>{user.email}</p>
                                                     </div>
                                                 </div>
                                                 <button
-                                                    className="w-1/12"
+                                                    className="ml-2 w-1/12"
                                                     type="button"
                                                     onClick={handleRemoveUserFromGroup}
                                                 >
-                                                    <img src="close-icon.svg" className="w-6 transition-all ease-in-out duration-300 hover:w-7" alt="" />
+                                                    <img src="close-icon.svg" className="w-5 transition-all ease-in-out duration-300 hover:w-6" alt="" />
                                                 </button>
                                             </article>
                                 )})}
